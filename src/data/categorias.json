@@ -1,0 +1,18 @@
+[
+    {
+        "nombre": "Electricos",
+        "valor": "electronics"
+    },
+    {
+        "nombre": "Joyeria",
+        "valor": "jewelery"
+    },
+    {
+        "nombre": "Ropa para hombre",
+        "valor": "men's clothing"
+    },
+    {
+        "nombre": "Ropa para mujer",
+        "valor": "women's clothing"
+    }
+]

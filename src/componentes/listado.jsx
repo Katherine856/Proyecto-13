@@ -1,20 +1,7 @@
 import { useEffect, useState } from "react";
 import Item from "./item";
 
-const Listado = () => {
-
-    const [productos, setProductos] = useState([])
-
-    const hacerFech = async () => {
-        const api = await fetch('https://fakestoreapi.com/products')
-        .then(res=>res.json())
-        .then(json=>setProductos(json))
-        
-    }
-
-    useEffect(() =>{
-        hacerFech()
-    }) 
+const Listado = ({productos}) => {
 
     return (
         <>
