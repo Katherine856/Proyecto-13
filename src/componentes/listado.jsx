@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Item from "./item";
 
-const Listado = ({productos}) => {
+const Listado = ({productos}) => { //recibimos el arreglo con todos los productos ya filtrados
 
     return (
         <>

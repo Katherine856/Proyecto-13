@@ -7,26 +7,42 @@ const Principal = () => {
     const [productos, setProductos] = useState([])
     const [filtros, setFiltros] = useState(null)
     const [productosFiltrados, setProductosFiltrados] = useState([])
+    const [query, setQuery] = useState('');
+    const [buscados, setBuscados] = useState(filtros)
 
-    const hacerFech = async () => {
-        const api = await fetch('https://fakestoreapi.com/products')
-        .then(res=>res.json())
-        .then(json=>setProductos(json))  
+    const hacerFetch = async () => { //Funcion asincrona 
+        const api = await fetch('https://fakestoreapi.com/products') //Hacer fetch 
+            .then(res => res.json()) //Convertir la respuesta en json
+            .then(json => setProductos(json)) //Seteamos el valor de productos
     }
 
-    useEffect(() =>{
-        hacerFech()
-    },[]) 
+    useEffect(() => {
+        hacerFetch() //Ejecucion de la funcion
+    }, []) //Apenas se inicializa la pagina
 
-    useEffect(()=>{
-        let tem = productos?.filter(product => product.category === filtros)
-        setProductosFiltrados(tem)
-    },[filtros])
- 
+    useEffect(() => {
+        if (!filtros) {
+            setProductosFiltrados(productos)
+        } else {
+            let tem = productos?.filter(product => product.category === filtros) //Fitran los productos por categoria
+            setProductosFiltrados(tem) //Seteamos el valor de los productos filtrados
+        }
+    }, [filtros, productos]) //Cada vez que cambie el filtros o productos
+
+    useEffect(() => { 
+        if(query !== ''){
+            let temp = productosFiltrados.filter(obj => obj.title.includes(query)); //Busca en los titulos que incluyan la palabra de la busqueda
+            setBuscados(temp)
+        }else{
+            setBuscados(productosFiltrados) //Seteamos el valor de los productos buscados
+        }
+    },[query, productosFiltrados])  //Cada vez que cambie el query o filtros
+
     return (
         <>
-            <Filtros  setFiltros={setFiltros}/>
-            <Listado productos={productosFiltrados.length !== 0 ? productosFiltrados : productos}/>
+            <Filtros setFiltros={setFiltros} />
+            <input type="text" onChange={(e) => setQuery(e.target.value)} />
+            <Listado productos={buscados !== null ? buscados : productosFiltrados} /> 
         </>
     )
 }
